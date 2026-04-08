@@ -7,5 +7,5 @@ export default defineConfig({
   // IMPORTANT: Change 'shit-tracker' to your actual GitHub repo name
   // e.g. if your repo is github.com/yourname/poop-dashboard, use '/poop-dashboard/'
   // If you use a custom domain, set base: '/'
-  base: '/shit-tracker/',
+  base: '/ShitAward/',
 })

@@ -8,7 +8,7 @@ import {
 // ── Constants ──
 const NAMES = ["Alessio", "Andrea", "Francesco", "Jacopo", "Luca"];
 const COLORS = {
-  Alessio: "#e07a5f",
+  Alessio: "#7dd3fc",
   Andrea: "#3d405b",
   Francesco: "#81b29a",
   Jacopo: "#f2cc8f",

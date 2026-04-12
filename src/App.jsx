@@ -142,6 +142,7 @@ export default function App() {
   const [rawData, setRawData] = useState(null);
   const [error, setError] = useState(null);
   const [selectedPerson, setSelectedPerson] = useState("all");
+  const updatePageHref = `${import.meta.env.BASE_URL}update.html`;
 
   // ── Fetch CSV on mount ──
   useEffect(() => {
@@ -481,6 +482,7 @@ export default function App() {
           <NavPill icon="🏆" label="Records" href="#records" />
           <NavPill icon="📅" label="Weekly" href="#weekly" />
           <NavPill icon="👤" label="Per Person" href="#per-person" />
+          <NavPill icon="✍️" label="Update Visits" href={updatePageHref} />
         </div>
 
         {/* ── Featured stats ── */}

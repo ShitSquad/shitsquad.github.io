@@ -189,10 +189,6 @@ export default function App() {
     });
   }, [rawData]);
 
-  <a href={`${import.meta.env.BASE_URL}update.html`} className="nav-pill">
-    📝 Update my count
-  </a>
-
   // ── Derived stats ──
   const stats = useMemo(() => {
     if (!data) return null;

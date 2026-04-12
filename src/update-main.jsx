@@ -170,26 +170,35 @@ function App() {
         value: count,
       });
   
+      let finalStatus = `Saved ${count} for ${allowedName} on ${dateIso}.`;
+  
       const webhookUrl = import.meta.env.VITE_MAKE_WEBHOOK_URL;
       if (webhookUrl) {
-        setStatus("Saved. Sending WhatsApp notification...");
-        const webhookRes = await fetch(webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            person: allowedName,
-            date: dateIso,
-            visits: count,
-          }),
-        });
+        try {
+          const webhookRes = await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              person: allowedName,
+              date: dateIso,
+              visits: count,
+            }),
+          });
   
-        if (!webhookRes.ok) {
-          const text = await webhookRes.text();
-          throw new Error(`Webhook failed: ${webhookRes.status} ${text}`);
+          if (!webhookRes.ok) {
+            const text = await webhookRes.text();
+            console.error("Webhook failed:", webhookRes.status, text);
+            finalStatus += " WhatsApp notification failed.";
+          } else {
+            finalStatus += " WhatsApp notification sent.";
+          }
+        } catch (webhookErr) {
+          console.error("Webhook error:", webhookErr);
+          finalStatus += " WhatsApp notification failed.";
         }
       }
   
-      setStatus(`Saved ${count} for ${allowedName} on ${dateIso}.`);
+      setStatus(finalStatus);
     } catch (err) {
       console.error(err);
       setStatus(`Save failed: ${err.message}`);

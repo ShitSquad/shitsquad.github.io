@@ -115,22 +115,34 @@ export default function App() {
 
   // ── Fetch CSV on mount ──
   useEffect(() => {
-    // In production, the CSV lives at /shit-tracker/data_shit.csv (or /data_shit.csv with custom domain)
-    // import.meta.env.BASE_URL gives us the correct base path from vite.config.js
-    const csvUrl = `${import.meta.env.BASE_URL}data_shit.csv`;
+  const csvUrl =
+    import.meta.env.VITE_SHEET_CSV_URL ||
+    `${import.meta.env.BASE_URL}data_shit.csv`;
 
-    fetch(csvUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.text();
-      })
-      .then((text) => {
-        const result = Papa.parse(text.trim(), { header: true, dynamicTyping: true, skipEmptyLines: true });
-        if (result.errors.length) console.warn("CSV parse warnings:", result.errors);
-        setRawData(result.data);
-      })
-      .catch((err) => setError(err.message));
-  }, []);
+  const sep = csvUrl.includes("?") ? "&" : "?";
+
+  fetch(`${csvUrl}${sep}ts=${Date.now()}`, {
+    cache: "no-store",
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.text();
+    })
+    .then((text) => {
+      const result = Papa.parse(text.trim(), {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true,
+      });
+
+      if (result.errors.length) {
+        console.warn("CSV parse warnings:", result.errors);
+      }
+
+      setRawData(result.data);
+    })
+    .catch((err) => setError(err.message));
+}, []);
 
   // ── Parse into our format ──
   const data = useMemo(() => {

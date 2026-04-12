@@ -215,6 +215,10 @@ export default function App() {
     const zeroDays = {};
     NAMES.forEach((n) => { zeroDays[n] = data.filter((r) => r[n] === 0).length; });
 
+    <a href={`${import.meta.env.BASE_URL}update.html`} className="nav-pill">
+    📝 Update my count
+  </a>
+
     return { totalDays, totalShits, avgPerDay, personAvg, personMax, personTotal, personMaxDate, champion, maxSingleDay, maxDayDate, zeroDays };
   }, [data]);
 

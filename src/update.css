@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: #f6f1e8;
+  color: #1e1b16;
+}
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card {
+  width: min(680px, 100%);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(30, 27, 22, 0.08);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(30, 27, 22, 0.08);
+}
+
+.eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #7a7265;
+  margin-bottom: 8px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1.05;
+}
+
+.lead {
+  margin: 0;
+  color: #5f584d;
+}
+
+.block,
+.form,
+.status,
+.notes {
+  margin-top: 22px;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+}
+
+label span {
+  font-size: 14px;
+  color: #5f584d;
+}
+
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(30, 27, 22, 0.14);
+  border-radius: 12px;
+  background: #fff;
+  font: inherit;
+}
+
+.primary-btn,
+.secondary-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: #1e1b16;
+  color: white;
+}
+
+.primary-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.secondary-btn {
+  background: #ece6da;
+  color: #1e1b16;
+}
+
+.signed-in-box {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid rgba(30, 27, 22, 0.08);
+  border-radius: 14px;
+}
+
+.signed-in-label {
+  font-size: 12px;
+  color: #7a7265;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.signed-in-email {
+  font-weight: 700;
+}
+
+.signed-in-name {
+  color: #5f584d;
+  margin-top: 4px;
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #7a7265;
+}
+
+.status {
+  padding: 12px 14px;
+  background: #fff7ed;
+  border: 1px solid #fdba74;
+  color: #9a3412;
+  border-radius: 12px;
+}
+
+.notes {
+  padding-top: 18px;
+  border-top: 1px solid rgba(30, 27, 22, 0.08);
+  color: #5f584d;
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+}

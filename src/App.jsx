@@ -17,24 +17,54 @@ const COLORS = {
 
 // ── Helpers ──
 function fmtDate(d) {
-  const dt = new Date(d + "T00:00:00");
+  if (!d) return "";
+  const dt = new Date(`${d}T00:00:00`);
+  if (Number.isNaN(dt.getTime())) return String(d);
   return dt.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 }
 
 function fmtDateLong(d) {
-  const dt = new Date(d + "T00:00:00");
-  return dt.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  if (!d) return "";
+  const dt = new Date(`${d}T00:00:00`);
+  if (Number.isNaN(dt.getTime())) return String(d);
+  return dt.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 }
-
-// ── Shared tooltip ──
+// ── Shared Tooltip ──
 function ChartTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
+
+  const row = payload[0]?.payload ?? {};
+  const hasRowDate =
+    typeof row.date === "string" &&
+    !Number.isNaN(new Date(`${row.date}T00:00:00`).getTime());
+
+  let title = String(label);
+
+  if (hasRowDate) {
+    title =
+      label && label !== row.date
+        ? `${label} · ${fmtDate(row.date)}`
+        : fmtDate(row.date);
+  } else if (
+    typeof label === "string" &&
+    !Number.isNaN(new Date(`${label}T00:00:00`).getTime())
+  ) {
+    title = fmtDate(label);
+  }
+
   return (
     <div className="chart-tooltip">
-      <p className="chart-tooltip-label">{fmtDate(label)}</p>
+      <p className="chart-tooltip-label">{title}</p>
       {payload.map((p) => (
         <p key={p.dataKey} style={{ margin: "2px 0", color: p.color }}>
-          {p.dataKey}: <strong>{typeof p.value === "number" ? p.value.toLocaleString() : p.value}</strong>
+          {p.name || p.dataKey}:{" "}
+          <strong>
+            {typeof p.value === "number" ? p.value.toLocaleString() : p.value}
+          </strong>
         </p>
       ))}
     </div>

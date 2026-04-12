@@ -103,9 +103,14 @@ function Section({ id, title, subtitle, children }) {
 }
 
 // ── Nav pill ──
-function NavPill({ icon, label, href }) {
+function NavPill({ icon, label, href, newTab = false }) {
   return (
-    <a href={href} className="nav-pill">
+    <a
+      href={href}
+      className="nav-pill"
+      target={newTab ? "_blank" : undefined}
+      rel={newTab ? "noreferrer" : undefined}
+    >
       <span className="nav-pill-icon">{icon}</span>
       <span className="nav-pill-label">{label}</span>
     </a>

@@ -146,21 +146,22 @@ function App() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+  
     if (!canSubmit) {
       setStatus("This Google account is not allowed to edit the sheet.");
       return;
     }
-
+  
     if (dateIso < START_DATE || dateIso > today) {
       setStatus(`Choose a date between ${START_DATE} and ${today}.`);
       return;
     }
-
+  
     try {
       setSaving(true);
       setStatus("Requesting Google Sheets permission...");
       const accessToken = await getSheetsAccessToken();
+  
       setStatus("Saving...");
       await writeValue({
         accessToken,
@@ -168,6 +169,26 @@ function App() {
         dateIso,
         value: count,
       });
+  
+      const webhookUrl = import.meta.env.VITE_MAKE_WEBHOOK_URL;
+      if (webhookUrl) {
+        setStatus("Saved. Sending WhatsApp notification...");
+        const webhookRes = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            person: allowedName,
+            date: dateIso,
+            visits: count,
+          }),
+        });
+  
+        if (!webhookRes.ok) {
+          const text = await webhookRes.text();
+          throw new Error(`Webhook failed: ${webhookRes.status} ${text}`);
+        }
+      }
+  
       setStatus(`Saved ${count} for ${allowedName} on ${dateIso}.`);
     } catch (err) {
       console.error(err);

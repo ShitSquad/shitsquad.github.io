@@ -1,11 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-// https://vite.dev/config/
+const rootDir = fileURLToPath(new URL('.', import.meta.url))
+
 export default defineConfig({
   plugins: [react()],
-  // IMPORTANT: Change 'shit-tracker' to your actual GitHub repo name
-  // e.g. if your repo is github.com/yourname/poop-dashboard, use '/poop-dashboard/'
-  // If you use a custom domain, set base: '/'
   base: '/',
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(rootDir, 'index.html'),
+        update: resolve(rootDir, 'update.html'),
+      },
+    },
+  },
 })

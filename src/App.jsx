@@ -487,7 +487,7 @@ export default function App() {
           <NavPill icon="🏆" label="Records" href="#records" />
           <NavPill icon="📅" label="Weekly" href="#weekly" />
           <NavPill icon="👤" label="Per Person" href="#per-person" />
-          <NavPill icon="✍️" label="Update Visits" href={updatePageHref} />
+          <NavPill icon="✍️" label="Update Visits" href={updatePageHref} newTab />
         </div>
 
         {/* ── Featured stats ── */}
